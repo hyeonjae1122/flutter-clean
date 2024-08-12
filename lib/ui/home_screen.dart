@@ -4,14 +4,14 @@ import '../data/api.dart';
 import '../model/Photo.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final PixabayApi api;
+  const HomeScreen({Key? key, required this.api}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final api = PixabayApi();
   final _controller = TextEditingController();
   List<Photo> _photos = [];
 
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   suffixIcon: IconButton(
                       onPressed: () async {
-                        final photos = await api.fetch(_controller.text);
+                        final photos = await widget.api.fetch(_controller.text);
                         setState(() {
                           _photos=photos;
                         });
