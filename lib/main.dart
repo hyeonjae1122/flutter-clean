@@ -3,7 +3,7 @@ import 'package:flutter_clean/data/photo_provider.dart';
 import 'package:flutter_clean/ui/home_screen.dart';
 import 'package:flutter_clean/ui/home_view_model.dart';
 
-import 'data/api.dart';
+import 'data/pixabay_api.dart';
 
 void main() {
   runApp(const MyApp());
