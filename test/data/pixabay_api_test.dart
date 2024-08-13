@@ -23,7 +23,7 @@ void main() {
         .thenAnswer((_) async => http.Response(fakeJson,200));
 
     final result = await api.fetch('iphone',client:client);
-    expect(result.length, 20);
+    expect(result.first.id, 1661722);
 
     //실제로 verify안의 내용이 실행되었는지 판단
     verify(client.get(Uri.parse(
