@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   http: ^1.2.2
   json_annotation: ^4.9.0
+  freezed_annotation: ^2.4.4
   equatable: ^2.0.5
 
 
@@ -54,6 +55,7 @@ dev_dependencies:
   mockito: ^5.4.4
   build_runner: ^2.4.12
   json_serializable: ^6.8.0
+  freezed: ^2.5.7
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
