@@ -8,11 +8,6 @@ import 'pixabay_api_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {
-
-
-
-
-  //실제 fetch를 하므로 좋지 않음
   test('Pull data from pixa', () async {
     final api = PixabayApi();
 

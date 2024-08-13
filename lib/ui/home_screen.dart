@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clean/ui/home_view_model.dart';
 import 'package:flutter_clean/ui/widget/photo_widget.dart';
-import '../data/photo_provider.dart';
+import 'package:provider/provider.dart';
 import '../model/photo.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,7 +23,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final viewModel = PhotoProvider.of(context).viewModel;
+    // 옛날 방식
+    // final viewModel = Provider.of<HomeViewModel>(context);
+    // 신방식
+    final viewModel = context.watch<HomeViewModel>();
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
