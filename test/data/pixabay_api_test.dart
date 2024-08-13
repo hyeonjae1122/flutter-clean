@@ -1,4 +1,5 @@
-import 'package:flutter_clean/data/pixabay_api.dart';
+import 'package:flutter_clean/data/data_source/pixabay_api.dart';
+import 'package:flutter_clean/data/repository/photo_api_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
@@ -9,15 +10,15 @@ import 'pixabay_api_test.mocks.dart';
 @GenerateMocks([http.Client])
 void main() {
   test('Pull data from pixa', () async {
-    final api = PixabayApi();
-
     final client = MockClient();
+    final api = PhotoApiRepositoryImpl(PixabayApi(client));
+
 
     when(client.get(Uri.parse(
         '${PixabayApi.baseUrl}/?key=${PixabayApi.key}&q=iphone&image_type=photo&pretty=true')))
         .thenAnswer((_) async => http.Response(fakeJson,200));
 
-    final result = await api.fetch('iphone',client:client);
+    final result = await api.fetch('iphone');
     expect(result.first.id, 1661722);
 
     //실제로 verify안의 내용이 실행되었는지 판단

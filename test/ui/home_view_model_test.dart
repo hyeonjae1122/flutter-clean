@@ -1,6 +1,6 @@
-import 'package:flutter_clean/data/photo_api_repository.dart';
-import 'package:flutter_clean/model/photo.dart';
-import 'package:flutter_clean/ui/home_view_model.dart';
+import 'package:flutter_clean/domain/model/photo.dart';
+import 'package:flutter_clean/domain/repository/photo_api_repository.dart';
+import 'package:flutter_clean/presentation/home/home_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
