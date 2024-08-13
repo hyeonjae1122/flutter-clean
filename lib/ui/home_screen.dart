@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // 옛날 방식
     // final viewModel = Provider.of<HomeViewModel>(context);
     // 신방식
-    final viewModel = context.watch<HomeViewModel>();
+    // final viewModel = context.watch<HomeViewModel>();
 
     return Scaffold(
         appBar: AppBar(
@@ -50,35 +50,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   suffixIcon: IconButton(
                       onPressed: () async {
-                        viewModel.fetch(_controller.text);
-
+                        context.read<HomeViewModel>().fetch(_controller.text);
                       }, icon: const Icon(Icons.search)),
                 ),
               ),
             ),
-            StreamBuilder<List<Photo>>(
-              stream: viewModel.photoStream,
-              builder: (context, snapshot) {
-                if(!snapshot.hasData){
-                  return const CircularProgressIndicator();
-                }
-
-                final photos = snapshot.data!;
+            Consumer<HomeViewModel>(
+              builder: (_, viewModel, child) {
                 return Expanded(
                     child: GridView.builder(
                       padding: const EdgeInsets.all(16.0),
-                  itemCount: photos.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                  ),
-                  itemBuilder: (context, index) {
-                        final photo = photos[index];
-                    return  PhotoWidget(photo: photo);
-                  },
-                ));
-              }
+                      itemCount: viewModel.photos.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                      ),
+                      itemBuilder: (context, index) {
+                        final photo = viewModel.photos[index];
+                        return  PhotoWidget(photo: photo);
+                      },
+                    ));
+                },
             )
           ],
         ));

@@ -12,15 +12,7 @@ void main() {
 
     final List<Photo> result =fakeJson.map((e)=>Photo.fromJson(e)).toList();
 
-    expect(
-      viewModel.photoStream,
-      emitsInOrder([
-          isA<List<Photo>>(),
-          equals(result),
-          equals(result),
-          equals(result),
-      ]),
-    );
+    expect(viewModel.photos, result);
 
   });
 }
