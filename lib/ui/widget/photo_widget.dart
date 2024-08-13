@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../model/Photo.dart';
+import '../../model/photo.dart';
 
 class PhotoWidget extends StatelessWidget {
   final Photo photo;
