@@ -3,7 +3,9 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_clean/domain/repository/photo_api_repository.dart';
 
+import '../../data/data_source/result.dart';
 import '../../domain/model/photo.dart';
+import 'home_ui_event.dart';
 
 
 class HomeViewModel with ChangeNotifier {
@@ -15,12 +17,20 @@ class HomeViewModel with ChangeNotifier {
   //수정 못하는 리스트타입
   UnmodifiableListView<Photo> get photos => UnmodifiableListView(_photos);
 
+  final _eventController = StreamController<HomeUiEvent>();
+  Stream<HomeUiEvent> get eventStream => _eventController.stream;
   HomeViewModel(this.repository);
 
 
   Future<void> fetch(String query) async {
-    final result = await repository.fetch(query);
-    _photos = result;
+    final Result<List<Photo>> result = await repository.fetch(query);
+    result.when(success: (photos){
+      _photos = photos;
+      notifyListeners();
+    }, error:(message){
+      _eventController.add(HomeUiEvent.showSnackBar(message));
+    });
+
     notifyListeners();
   }
 }

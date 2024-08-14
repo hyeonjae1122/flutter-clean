@@ -1,5 +1,7 @@
 import 'package:flutter_clean/data/data_source/pixabay_api.dart';
+import 'package:flutter_clean/data/data_source/result.dart';
 import 'package:flutter_clean/data/repository/photo_api_repository_impl.dart';
+import 'package:flutter_clean/domain/model/photo.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
@@ -18,8 +20,8 @@ void main() {
         '${PixabayApi.baseUrl}/?key=${PixabayApi.key}&q=iphone&image_type=photo&pretty=true')))
         .thenAnswer((_) async => http.Response(fakeJson,200));
 
-    final result = await api.fetch('iphone');
-    expect(result.first.id, 1661722);
+    final Result<List<Photo>> result = await api.fetch('iphone');
+    expect((result as Success<List<Photo>>).data.first, 1661722);
 
     //실제로 verify안의 내용이 실행되었는지 판단
     verify(client.get(Uri.parse(

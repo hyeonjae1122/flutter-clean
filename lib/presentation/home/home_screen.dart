@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_clean/presentation/home/home_view_model.dart';
 import 'package:flutter_clean/presentation/home/components/photo_widget.dart';
@@ -12,11 +14,28 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _controller = TextEditingController();
+  StreamSubscription? _subscription;
 
+  @override
+  void initState() {
+    super.initState();
+    //iniState에서 watch를 쓰면 에러남
 
+    Future.microtask((){
+      final viewModel = context.read<HomeViewModel>();
+      viewModel.eventStream.listen((event){
+        event.when(showSnackBar: (message){
+          final snackBar = SnackBar(content: Text(message));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        });
+      });
+    });
+
+  }
 
   @override
   void dispose(){
+    _subscription?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -45,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: _controller,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
                   suffixIcon: IconButton(
                       onPressed: () async {

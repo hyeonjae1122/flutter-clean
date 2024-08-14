@@ -1,5 +1,6 @@
+import 'package:flutter_clean/data/data_source/result.dart';
 import '../model/photo.dart';
 
 abstract class PhotoApiRepository {
-  Future<List<Photo>> fetch(String query);
+  Future<Result<List<Photo>>> fetch(String query);
 }
